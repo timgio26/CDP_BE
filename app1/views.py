@@ -7,8 +7,11 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
+from rest_framework_api_key.permissions import HasAPIKey
+
 # Create your views here.
 class CustomerList(APIView):
+    permission_classes = [HasAPIKey]
     def get(self,request, format=None):
         customers = Customer.objects.all()
         serializer = CustomerSer(customers, many=True)
@@ -21,6 +24,7 @@ class CustomerList(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class CustomerDetail(APIView):
+    permission_classes = [HasAPIKey]
     def get(self,request, pk, format=None):
         customer = get_object_or_404(Customer, pk=pk)
         serializer = CustomerSer(customer)
@@ -38,6 +42,7 @@ class CustomerDetail(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class AddressView(APIView):
+    permission_classes = [HasAPIKey]
     def post(self,request, format=None):
         serializer = AddressSer(data=request.data)
         if serializer.is_valid():
@@ -46,6 +51,7 @@ class AddressView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class AddressEachView(APIView):
+    permission_classes = [HasAPIKey]
     def get(self,request,pk,format=None):
         address= get_object_or_404(Address,pk=pk)
         serializer = AddressSer(address)
@@ -64,6 +70,7 @@ class AddressEachView(APIView):
 
 
 class ServiceView(APIView):
+    permission_classes = [HasAPIKey]
     def post(self,request, format=None):
         serializer = ServiceSer(data=request.data)
         if serializer.is_valid():
@@ -72,6 +79,7 @@ class ServiceView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
 class ServiceEachView(APIView):
+    permission_classes = [HasAPIKey]
     def get(self,request,pk,format=None):
         service=get_object_or_404(Service,pk=pk)
         serializer = ServiceSer(service)
