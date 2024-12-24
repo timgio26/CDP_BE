@@ -3,15 +3,17 @@ from rest_framework import serializers
 
 
 class ServiceSer(serializers.ModelSerializer):
+    address_id = serializers.PrimaryKeyRelatedField(queryset=Address.objects.all(),source='address', write_only=True)
     class Meta:
         model=Service
-        fields = ['id','keluhan','tindakan','hasil','service_date','img_url']
+        fields = ['address_id','id','keluhan','tindakan','hasil','service_date','img_url']
 
 class AddressSer(serializers.ModelSerializer):
+    customer_id = serializers.PrimaryKeyRelatedField(queryset=Customer.objects.all(), source='customer', write_only=True)
     services = ServiceSer(many=True, required=False)
     class Meta:
         model=Address
-        fields = ['id','address','lat','lng','img_url','services']
+        fields = ['customer_id','id','address','lat','lng','img_url','services']
 
 class CustomerSer(serializers.ModelSerializer):
     addresses = AddressSer(many=True, required=False)
