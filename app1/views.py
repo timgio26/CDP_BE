@@ -9,7 +9,7 @@ from rest_framework import status
 
 # Create your views here.
 class CustomerList(APIView):
-    def get(self, request, format=None):
+    def get(self,request, format=None):
         customers = Customer.objects.all()
         serializer = CustomerSer(customers, many=True)
         return Response(serializer.data)
@@ -20,17 +20,22 @@ class CustomerList(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
 class CustomerDetail(APIView):
-    def get(self, request, pk, format=None):
+    def get(self,request, pk, format=None):
         customer = get_object_or_404(Customer, pk=pk)
         serializer = CustomerSer(customer)
-        return Response(serializer.data)
-        
-    def delete(self, request, pk, format=None):
+        return Response(serializer.data)       
+    def delete(self,request, pk, format=None):
         customer = get_object_or_404(Customer, pk=pk)
         customer.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    def patch(self,request, pk, format=None): 
+        customer = get_object_or_404(Customer, pk=pk)
+        serializer = CustomerSer(customer, data=request.data, partial=True) 
+        if serializer.is_valid(): 
+            serializer.save() 
+            return Response(serializer.data) 
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class AddressView(APIView):
     def post(self,request, format=None):
@@ -40,6 +45,24 @@ class AddressView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class AddressEachView(APIView):
+    def get(self,request,pk,format=None):
+        address= get_object_or_404(Address,pk=pk)
+        serializer = AddressSer(address)
+        return Response(serializer.data)
+    def delete(self,request,pk,format=None):
+        address= get_object_or_404(Address,pk=pk)
+        address.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    def patch(self,request, pk, format=None): 
+        address = get_object_or_404(Address, pk=pk)
+        serializer = AddressSer(address, data=request.data, partial=True) 
+        if serializer.is_valid(): 
+            serializer.save() 
+            return Response(serializer.data) 
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 class ServiceView(APIView):
     def post(self,request, format=None):
         serializer = ServiceSer(data=request.data)
@@ -47,4 +70,23 @@ class ServiceView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+class ServiceEachView(APIView):
+    def get(self,request,pk,format=None):
+        service=get_object_or_404(Service,pk=pk)
+        serializer = ServiceSer(service)
+        return Response(serializer.data)
+    def delete(self,request,pk,format=None):
+        service=get_object_or_404(Service,pk=pk)
+        service.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    def patch(self,request, pk, format=None): 
+        service = get_object_or_404(Service, pk=pk)
+        serializer = ServiceSer(service, data=request.data, partial=True) 
+        if serializer.is_valid(): 
+            serializer.save() 
+            return Response(serializer.data) 
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+        
