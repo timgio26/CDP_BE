@@ -1,5 +1,6 @@
+from django.shortcuts import get_object_or_404,render
+from django.views.generic import TemplateView
 
-from django.shortcuts import get_object_or_404
 from .models import Customer,Address,Service
 from .serializers import CustomerSer,AddressSer,ServiceSer
 
@@ -68,7 +69,6 @@ class AddressEachView(APIView):
             return Response(serializer.data) 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
 class ServiceView(APIView):
     permission_classes = [HasAPIKey]
     def post(self,request, format=None):
@@ -96,5 +96,7 @@ class ServiceEachView(APIView):
             return Response(serializer.data) 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class Home(TemplateView):
+    template_name='home.html'
 
         
