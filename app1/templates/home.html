@@ -12,19 +12,83 @@
 <body>
     <div class="container">
         <h1>CDP API Documentation</h1>
+        <p>request required API key, please request to: <a href="https://github.com/timgio26">https://github.com/timgio26</a></p>
         <ul>
             <li>
                 <div>
-                    <h3>Get All User</h3>
-                    <span>method: Get,Post</span>
+                    <h3>List All Customer</h3>
+                    <span>method: GET</span>
                     <p>/customer</p>
+
                 </div>
             </li>
             <li>
                 <div>
-                    <h3>Get each User</h3>
-                    <span>method: Get,Delete,Patch</span>
+                    <h3>Add Customer</h3>
+                    <span>method: POST</span>
+                    <p>/customer</p>
+                    <div class="px-5 py-1 bg-primary text-white rounded shadow-sm">
+                        <span>Body</span>
+                        <ul>
+                            <li>name</li>
+                            <li>email</li>
+                            <li>phone</li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <h3>Each Customer</h3>
+                    <span>method: GET, DELETE, PATCH</span>
                     <p>/customer/{id}</p>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <h3>Add Address</h3>
+                    <span>method: POST</span>
+                    <p>/address</p>
+                    <div class="px-5 py-1 bg-primary text-white rounded shadow-sm">
+                        <span>Body</span>
+                        <ul>
+                            <li>address</li>
+                            <li>lat</li>
+                            <li>lng</li>
+                            <li>img_url</li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <h3>Each Address</h3>
+                    <span>method: GET, DELETE, PATCH</span>
+                    <p>/address/{id}</p>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <h3>Add Service</h3>
+                    <span>method: POST</span>
+                    <p>/service</p>
+                    <div class="px-5 py-1 bg-primary text-white rounded shadow-sm">
+                        <span>Body</span>
+                        <ul>
+                            <li>keluhan</li>
+                            <li>tindakan</li>
+                            <li>hasil</li>
+                            <li>service_date <span>format : YYYY-MM-DD</span></li>
+                            <li>img_url</li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <h3>Each Service</h3>
+                    <span>method: GET, DELETE, PATCH</span>
+                    <p>/Service/{id}</p>
                 </div>
             </li>
         </ul>
