@@ -9,14 +9,17 @@ class ServiceSer(serializers.ModelSerializer):
         fields = ['address_id','id','keluhan','tindakan','hasil','service_date','img_url']
 
 class AddressSer(serializers.ModelSerializer):
-    customer_id = serializers.PrimaryKeyRelatedField(queryset=Customer.objects.all(), source='customer', write_only=True)
+    customer_id = serializers.PrimaryKeyRelatedField(queryset=Customer.objects.all(), source='customer')
     services = ServiceSer(many=True, required=False)
+    customer_data = serializers.StringRelatedField(source='customer')
     class Meta:
         model=Address
-        fields = ['customer_id','id','address','lat','lng','img_url','services']
+        # fields = ['customer_id','customer','customer_data','id','address','category','lat','lng','img_url','services']
+        fields = ['customer_id','customer_data','id','address','category','lat','lng','img_url','services']
+
 
 class CustomerSer(serializers.ModelSerializer):
     addresses = AddressSer(many=True, required=False)
     class Meta:
         model=Customer
-        fields = ['id','name','email','phone','addresses']
+        fields = ['id','name','email','phone','addresses','join_date']
